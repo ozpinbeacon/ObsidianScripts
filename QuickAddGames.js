@@ -99,8 +99,13 @@ async function start(params, settings) {
 	}
 
 	
-	var [hltb_main, hltb_extra, hltb_100, hltb_url] = await getHLTBInfo(selectedGame.name)
-	
+	try {
+		var [hltb_main, hltb_extra, hltb_100, hltb_url] = await getHLTBInfo(selectedGame.name)
+	} catch (error) {
+		notice("Not on HLTB")
+		var [hltb_main, hltb_extra, hltb_100, hltb_url] = [0, 0, 0, 0]
+	}
+
 	let recommender = await QuickAdd.quickAddApi.inputPrompt("Did anyone recommend this game?");
 	if (!recommender) {
 		recommender = "None"
